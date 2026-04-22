@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giusto Cafe — Premium Experience</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+/* ── Color Palette & Variables ── */
+:root {
+  --bg-color: #f7f4ef;
+  --text-main: #2a1e17;
+  --text-muted: #756357;
+  --accent-gold: #c9893a;
+  --accent-caramel: #b8652d;
+  --accent-light: #e6ceb3;
+  
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 32px rgba(42, 30, 23, 0.06);
+  --glass-blur: blur(16px);
+  
+  --glass-dark-bg: rgba(42, 30, 23, 0.85);
+  --glass-dark-border: rgba(255, 255, 255, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-color);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(230, 206, 179, 0.5) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 255, 255, 0.8) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(201, 137, 58, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(255, 255, 255, 0.6) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-family: 'Tajawal', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Typography ── */
+h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+.italic-serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+
+/* ── Shared Glass Container ── */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 24px;
+}
+
+/* ── Navigation ── */
+.top-nav {
+  position: fixed;
+  top: 16px; left: 50%; transform: translateX(-50%);
+  width: 90%; max-width: 1000px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 24px;
+  z-index: 1000;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+}
+.nav-logo { font-size: 24px; font-weight: 700; color: var(--accent-gold); text-decoration: none; letter-spacing: 1px;}
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { text-decoration: none; color: var(--text-main); font-weight: 500; font-size: 15px; transition: color 0.3s; }
+.nav-links a:hover { color: var(--accent-gold); }
+
+/* ── Landing Page Layout ── */
+.lp-section { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+.section-title { text-align: center; font-size: 36px; margin-bottom: 12px; color: var(--text-main); }
+.section-subtitle { text-align: center; font-size: 18px; color: var(--text-muted); margin-bottom: 48px; }
+
+/* ── Hero Section ── */
+.hero {
+  min-height: 90vh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; position: relative; padding-top: 80px;
+}
+.hero-tag { font-size: 15px; letter-spacing: 4px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease forwards; }
+.hero-logo {
+  font-size: clamp(60px, 15vw, 120px); font-weight: 700; line-height: 1;
+  background: linear-gradient(135deg, var(--accent-caramel) 0%, var(--accent-gold) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 16px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s;
+  cursor: pointer;
+}
+.hero-sub { font-size: 20px; color: var(--text-muted); letter-spacing: 1px; max-width: 500px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s; }
+.hero-cta {
+  margin-top: 40px; display: inline-block; padding: 16px 40px;
+  background: linear-gradient(135deg, var(--accent-caramel), var(--accent-gold));
+  color: #fff; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px;
+  box-shadow: 0 8px 24px rgba(201, 137, 58, 0.3); transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s;
+}
+.hero-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(201, 137, 58, 0.4); }
+
+/* ── About Section ── */
+.about-grid { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; padding: 48px; }
+@media(min-width: 768px) { .about-grid { grid-template-columns: 1fr 1fr; } }
+.about-text h2 { font-size: 32px; margin-bottom: 16px; }
+.about-text p { font-size: 16px; line-height: 1.8; color: var(--text-muted); margin-bottom: 24px; }
+.about-image { border-radius: 20px; overflow: hidden; background: rgba(201,137,58,0.1); display: flex; align-items: center; justify-content: center; aspect-ratio: 4/3; }
+.about-image img { width: 40%; opacity: 0.8; filter: none; }
+
+/* ── Menu Section ── */
+.menu-wrapper { max-width: 800px; margin: 0 auto; }
+.tabs-wrap {
+  position: sticky; top: 70px; z-index: 100;
+  margin-bottom: 30px; padding: 10px 0;
+}
+.tabs-scroll {
+  display: flex; overflow-x: auto; gap: 8px; padding: 10px 24px; scrollbar-width: none;
+  background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border); border-radius: 50px; box-shadow: var(--glass-shadow);
+  width: max-content; margin: 0 auto; max-width: 100%;
+}
+.tabs-scroll::-webkit-scrollbar { display: none; }
+.tab-btn {
+  background: transparent; border: none; color: var(--text-muted);
+  font-family: 'Tajawal', sans-serif; font-size: 14px; font-weight: 600;
+  padding: 10px 20px; cursor: pointer; white-space: nowrap; transition: all 0.3s ease;
+  border-radius: 30px;
+}
+.tab-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.5); }
+.tab-btn.active { background: #fff; color: var(--accent-caramel); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+.menu-category { display: none; opacity: 0; transition: opacity 0.4s ease; }
+.menu-category.active { display: block; opacity: 1; animation: fadeUp 0.5s ease forwards; }
+
+.sec-header { text-align: center; margin-bottom: 36px; }
+.sec-title { font-size: 32px; color: var(--text-main); margin-bottom: 4px; }
+.sec-en { font-size: 16px; color: var(--accent-gold); }
+.sec-rule { width: 40px; height: 2px; background: var(--accent-gold); margin: 12px auto 0; border-radius: 2px;}
+
+/* ── Menu Cards ── */
+.items-list { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media(min-width: 600px) { .items-list { grid-template-columns: 1fr 1fr; } }
+.item {
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border); border-radius: 24px; overflow: hidden;
+  box-shadow: var(--glass-shadow); transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex; flex-direction: column;
+}
+.item:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(42, 30, 23, 0.08); }
+.ip { width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.3); }
+.iinfo { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+.in { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+.ie { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
+.id { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
+.badge { display: inline-block; background: rgba(201,137,58,0.15); color: var(--accent-caramel); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; margin-bottom: 8px; }
+
+.item-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; margin-bottom: 16px; }
+.pm { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--accent-caramel); }
+.pc { font-size: 12px; color: var(--text-muted); margin-right: 4px; }
+.psd { display: flex; gap: 16px; text-align: center; }
+.pcol .plbl { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 2px;}
+.pcol .pval { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--accent-caramel); }
+
+.add-cart-btn {
+  width: 100%; padding: 14px; border: none; border-radius: 16px;
+  background: rgba(255,255,255,0.6); color: var(--text-main);
+  font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.8);
+}
+.add-cart-btn:hover { background: linear-gradient(135deg, var(--accent-caramel), var(--accent-gold)); color: #fff; box-shadow: 0 4px 15px rgba(201, 137, 58, 0.3); border-color: transparent;}
+.add-cart-btn.in-cart { background: #4caf50; color: #fff; border-color: transparent; }
+
+/* View Toggle specific adjustments */
+body.list-view .items-list { grid-template-columns: 1fr; gap: 16px; }
+body.list-view .item { flex-direction: row; align-items: stretch; border-radius: 20px; padding: 10px; }
+body.list-view .ip { width: 100px; min-width: 100px; aspect-ratio: 1/1; border-radius: 14px; background: rgba(255,255,255,0.4); margin-left: 12px; }
+body.list-view .iinfo { padding: 0; justify-content: center; }
+body.list-view .item-bottom { margin-bottom: 0; }
+body.list-view .add-cart-btn { width: auto; padding: 10px 16px; border-radius: 12px; margin-top: 10px; }
+
+/* ── Floating Buttons & Modals ── */
+#view-toggle {
+  position: fixed; bottom: 85px; right: 24px; z-index: 500;
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border); border-radius: 50px; padding: 12px 20px;
+  display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-main); font-weight: 700;
+  box-shadow: var(--glass-shadow); transition: transform 0.2s;
+}
+#view-toggle:hover { transform: translateY(-3px); }
+
+#cart-fab {
+  position: fixed; bottom: 24px; left: 24px; right: 24px; z-index: 500; 
+  background: linear-gradient(135deg, var(--accent-caramel), var(--accent-gold));
+  border: none; border-radius: 50px; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; box-shadow: 0 8px 24px rgba(201, 137, 58, 0.4); color: #fff; font-size: 16px; font-weight: 700;
+  transition: transform 0.2s; max-width: 400px; margin: 0 auto;
+}
+@media(min-width: 600px) { #cart-fab { right: auto; width: auto; left: 24px; gap: 12px; } }
+#cart-fab.hidden { display: none; }
+#cart-count { background: #fff; color: var(--accent-caramel); border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; }
+
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 800; display: none; align-items: center; justify-content: center;
+  background: rgba(42, 30, 23, 0.4); backdrop-filter: blur(8px); padding: 24px;
+}
+.modal-overlay.open { display: flex; }
+.modal-sheet {
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 28px; padding: 32px 24px; width: 100%; max-width: 440px; box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  animation: slideUp 0.3s ease; text-align: center;
+}
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+#cart-drawer { align-items: flex-end; padding: 0;}
+.cart-sheet { background: rgba(255,255,255,0.9); border-radius: 32px 32px 0 0; width: 100%; max-width: 600px; margin: 0 auto; max-height: 85vh; display: flex; flex-direction: column; }
+.cart-head { padding: 24px; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+.cart-head h2 { font-size: 22px; color: var(--text-main); margin:0;}
+.cart-close { background: rgba(0,0,0,0.05); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 16px; cursor: pointer; color: var(--text-main); }
+.cart-items { overflow-y: auto; flex: 1; padding: 16px 24px; }
+.cart-item { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.cart-item-icon { font-size: 32px; width: 40px; text-align:center;}
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: 16px; font-weight: 700; color: var(--text-main); }
+.cart-item-size { font-size: 13px; color: var(--text-muted); }
+.cart-item-price { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--accent-caramel); font-weight: 700; }
+.cart-item-qty { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.04); border-radius: 20px; padding: 4px; }
+.qty-btn { background: #fff; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 16px; cursor: pointer; color: var(--text-main); font-weight: 700; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.qty-num { font-size: 15px; font-weight: 700; min-width: 20px; text-align: center; }
+.cart-footer { padding: 24px; border-top: 1px solid rgba(0,0,0,0.05); background: rgba(255,255,255,0.5); }
+.cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.cart-total-lbl { font-size: 16px; font-weight: 700; color: var(--text-muted); }
+.cart-total-val { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--accent-caramel); }
+.cart-checkout { width: 100%; padding: 18px; background: linear-gradient(135deg, var(--text-main), #111); color: var(--accent-gold); border: none; border-radius: 20px; font-family: 'Tajawal', sans-serif; font-size: 18px; font-weight: 700; cursor: pointer; transition: transform 0.2s;}
+.cart-checkout:hover { transform: translateY(-2px); }
+
+.modal-sheet h3 { font-size: 24px; margin-bottom: 8px; color: var(--text-main); }
+.modal-sheet p { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
+.name-input, .pw-input { width: 100%; padding: 16px; border: 2px solid rgba(255,255,255,0.8); border-radius: 16px; background: rgba(255,255,255,0.6); font-family: inherit; font-size: 16px; color: var(--text-main); margin-bottom: 20px; outline: none; transition: border-color 0.3s, background 0.3s; text-align: center; }
+.name-input:focus, .pw-input:focus { border-color: var(--accent-gold); background: #fff; }
+.btn-solid { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--accent-caramel), var(--accent-gold)); color: #fff; border: none; border-radius: 16px; font-family: 'Tajawal', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(201,137,58,0.3); }
+
+.size-opts { display: flex; gap: 16px; margin-bottom: 24px; }
+.size-opt { flex: 1; padding: 20px 10px; border: 2px solid rgba(255,255,255,0.8); border-radius: 20px; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.2s; }
+.size-opt.sel { border-color: var(--accent-gold); background: rgba(201,137,58,0.05); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(201,137,58,0.1); }
+.size-opt .sol { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--accent-caramel); }
+.size-opt .sll { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+
+#admin-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(20, 14, 10, 0.95); backdrop-filter: blur(15px); display: none; flex-direction: column; color: #fff; }
+#admin-overlay.open { display: flex; }
+.admin-head { padding: 24px; border-bottom: 1px solid var(--glass-dark-border); display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.02); }
+.admin-head h2 { color: var(--accent-gold); margin:0;}
+.admin-close { background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 40px; height: 40px; color: #fff; font-size: 20px; cursor: pointer; }
+.admin-body { flex: 1; overflow-y: auto; padding: 24px; max-width: 800px; margin: 0 auto; width: 100%; }
+.order-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-dark-border); border-radius: 20px; padding: 24px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+.order-card-head { display: flex; justify-content: space-between; margin-bottom: 16px; align-items: center;}
+.order-num { color: var(--accent-gold); font-size: 18px; font-family: serif; font-weight: 700;}
+.order-row { display: flex; justify-content: space-between; padding: 8px 0; color: rgba(255,255,255,0.8); font-size: 15px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
+.order-total-row { display: flex; justify-content: space-between; padding-top: 16px; margin-top: 8px; font-weight: 700; font-size: 18px; color: var(--accent-gold); }
+
+#toast { position: fixed; top: 100px; left: 50%; transform: translate(-50%, -20px); z-index: 1000; background: rgba(46, 125, 50, 0.9); backdrop-filter: blur(10px); color: #fff; padding: 14px 32px; border-radius: 50px; font-size: 15px; font-weight: 700; opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; box-shadow: 0 10px 30px rgba(46,125,50,0.3); }
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+.footer { text-align: center; padding: 60px 24px 40px; border-top: 1px solid rgba(0,0,0,0.05); margin-top: 60px; }
+.footer-logo { font-size: 28px; color: var(--text-main); margin-bottom: 8px; font-weight: 700; }
+.footer-tag { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
+.fn { font-size: 13px; color: rgba(117, 99, 87, 0.6); margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="#" class="nav-logo" onmousedown="startLogoPress()" onmouseup="cancelLogoPress()" onmouseleave="cancelLogoPress()" ontouchstart="startLogoPress()" ontouchend="cancelLogoPress()">Giusto</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#menu">Menu</a>
+  </div>
+</nav>
+
+<header class="hero lp-section">
+  <p class="hero-tag italic-serif">Cafe & Coffee Bar</p>
+  <h1 class="hero-logo">Giusto</h1>
+  <p class="hero-sub">Good coffee. Good moments. Discover our premium selection of handcrafted beverages and artisanal desserts.</p>
+  <a href="#menu" class="hero-cta">Explore The Menu</a>
+</header>
+
+<section id="about" class="lp-section">
+  <div class="glass-panel about-grid">
+    <div class="about-image">
+      <img src="giusto_logo.png" alt="Giusto Atmosphere" style="filter:none; opacity: 0.8; width: 60%; object-fit: contain;">
+    </div>
+    <div class="about-text">
+      <h2 class="italic-serif" style="color: var(--accent-gold);">Crafted with Passion</h2>
+      <p>At Giusto Cafe, we believe every cup tells a story. From our carefully sourced beans to our signature mocktails and fresh bakes, every item is prepared with precision and love.</p>
+      <p>Whether you're starting your morning with a classic espresso or winding down with our famous Giusto Milkshake, we promise an experience that delights the senses.</p>
+    </div>
+  </div>
+</section>
+
+<section id="menu" class="lp-section" style="padding-top: 60px;">
+  <h2 class="section-title">Our Menu</h2>
+  <p class="section-subtitle italic-serif">Select a category to view items</p>
+
+  <div class="menu-wrapper">
+    <nav class="tabs-wrap">
+      <div class="tabs-scroll" id="tabs">
+        <button class="tab-btn active" data-target="coffee">☕ Coffee</button>
+        <button class="tab-btn" data-target="hotdrinks">🍵 Hot Drinks</button>
+        <button class="tab-btn" data-target="icecoffee">🧊 Ice Coffee</button>
+        <button class="tab-btn" data-target="milkshake">🥤 Milk Shake</button>
+        <button class="tab-btn" data-target="frappe">🧋 Frappe</button>
+        <button class="tab-btn" data-target="juices">🍊 Juices</button>
+        <button class="tab-btn" data-target="smoothie">🫐 Smoothie</button>
+        <button class="tab-btn" data-target="waffle">🧇 Waffle</button>
+        <button class="tab-btn" data-target="icecream">🍦 Ice Cream</button>
+        <button class="tab-btn" data-target="dessert">🍰 Dessert</button>
+        <button class="tab-btn" data-target="breakfast">🥐 Breakfast</button>
+        <button class="tab-btn" data-target="softdrink">🥤 Soft Drink</button>
+        <button class="tab-btn" data-target="colors">🍹 Colors</button>
+      </div>
+    </nav>
+
+    <div class="menu-category active" id="coffee">
+      <div class="sec-header"><h2 class="sec-title">Coffee</h2><p class="sec-en italic-serif">قهوة</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Turkish Coffee</div><div class="ie">قهوة تركي</div></div><div class="ir"><div class="psd"><div class="pcol"><div class="plbl">S</div><div class="pval">45</div></div><div class="pcol"><div class="plbl">D</div><div class="pval">55</div></div></div></div></div><button class="add-cart-btn" data-name="Turkish Coffee" data-icon="☕" data-price-s="45" data-price-d="55" data-has-sizes="true" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">French Coffee</div><div class="ie">قهوة فرنش</div></div><div class="ir"><span class="pm">60</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="French Coffee" data-icon="🫖" data-price="60" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Hazelnut Coffee</div><div class="ie">قهوة هازلنت</div></div><div class="ir"><span class="pm">65</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Hazelnut Coffee" data-icon="🌰" data-price="65" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Nutella Coffee</div><div class="ie">قهوة نوتيلا</div></div><div class="ir"><span class="pm">75</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Nutella Coffee" data-icon="🍫" data-price="75" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Espresso</div><div class="ie">إسبريسو</div></div><div class="ir"><div class="psd"><div class="pcol"><div class="plbl">S</div><div class="pval">50</div></div><div class="pcol"><div class="plbl">D</div><div class="pval">60</div></div></div></div></div><button class="add-cart-btn" data-name="Espresso" data-icon="⚡" data-price-s="50" data-price-d="60" data-has-sizes="true" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Espresso Macchiato</div><div class="ie">إسبريسو ماكياتو</div></div><div class="ir"><div class="psd"><div class="pcol"><div class="plbl">S</div><div class="pval">55</div></div><div class="pcol"><div class="plbl">D</div><div class="pval">65</div></div></div></div></div><button class="add-cart-btn" data-name="Espresso Macchiato" data-icon="☕" data-price-s="55" data-price-d="65" data-has-sizes="true" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Espresso Spanish</div></div><div class="ir"><span class="pm">70</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Espresso Spanish" data-icon="🇪🇸" data-price="70" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Espresso Avocado</div></div><div class="ir"><span class="pm">70</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Espresso Avocado" data-icon="🥑" data-price="70" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">American Coffee</div></div><div class="ir"><span class="pm">70</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="American Coffee" data-icon="🇺🇸" data-price="70" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Cappuccino</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Cappuccino" data-icon="☁️" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Cappuccino Flavor</div><div class="id">Caramel · Vanilla · Hazelnut · Cinnamon</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Cappuccino Flavor" data-icon="☁️" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Latte</div><div class="ie">لاتيه</div></div><div class="ir"><span class="pm">70</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Latte" data-icon="🥛" data-price="70" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Spanish Latte</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Spanish Latte" data-icon="🇪🇸" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Matcha Latte</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Matcha Latte" data-icon="🍵" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Pistachio Latte</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Pistachio Latte" data-icon="🌰" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Latte Flavor</div><div class="id">Caramel · Vanilla · Hazelnut · Cinnamon</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Latte Flavor" data-icon="🥛" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mocha</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mocha" data-icon="🍫" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">White Mocha</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="White Mocha" data-icon="🤍" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Flat White</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Flat White" data-icon="🥛" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Cortado Classic</div></div><div class="ir"><span class="pm">70</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Cortado Classic" data-icon="☕" data-price="70" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mocha Cortado</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mocha Cortado" data-icon="🍫" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Cortado Flavor</div><div class="id">Caramel · Vanilla · Hazelnut · Cinnamon</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Cortado Flavor" data-icon="☕" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Nescafe Black</div></div><div class="ir"><span class="pm">65</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Nescafe Black" data-icon="🖤" data-price="65" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Nescafe White</div></div><div class="ir"><span class="pm">70</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Nescafe White" data-icon="🤍" data-price="70" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="hotdrinks">
+      <div class="sec-header"><h2 class="sec-title">Hot Drinks</h2><p class="sec-en italic-serif">مشروبات ساخنة</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Tea</div><div class="ie">شاي</div></div><div class="ir"><span class="pm">30</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Tea" data-icon="🫖" data-price="30" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Tea Flavor</div></div><div class="ir"><span class="pm">35</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Tea Flavor" data-icon="🌿" data-price="35" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Tea Milk</div></div><div class="ir"><span class="pm">40</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Tea Milk" data-icon="🥛" data-price="40" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Karak Tea</div><div class="ie">شاي كرك</div></div><div class="ir"><span class="pm">60</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Karak Tea" data-icon="🫖" data-price="60" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Hot Herbes</div></div><div class="ir"><span class="pm">35</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Hot Herbes" data-icon="🌿" data-price="35" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mix Herbes</div></div><div class="ir"><span class="pm">70</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mix Herbes" data-icon="🌿" data-price="70" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Hot Cidar</div></div><div class="ir"><span class="pm">60</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Hot Cidar" data-icon="🍎" data-price="60" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Vitamin C</div></div><div class="ir"><span class="pm">75</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Vitamin C" data-icon="🍋" data-price="75" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Cinnamon</div><div class="ie">قرفة</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Cinnamon" data-icon="🟤" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Hot Chocolate</div></div><div class="ir"><span class="pm">70</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Hot Chocolate" data-icon="🍫" data-price="70" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Hot Chocolate Nutella</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Hot Chocolate Nutella" data-icon="🍫" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Hot Chocolate Oreo</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Hot Chocolate Oreo" data-icon="🍫" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Hot Caramel</div></div><div class="ir"><span class="pm">75</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Hot Caramel" data-icon="🧡" data-price="75" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Sahlab Nuts</div><div class="ie">سحلب بالمكسرات</div></div><div class="ir"><span class="pm">75</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Sahlab Nuts" data-icon="🌰" data-price="75" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="icecoffee">
+      <div class="sec-header"><h2 class="sec-title">Ice Coffee</h2><p class="sec-en italic-serif">قهوة مثلجة</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice American Coffee</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice American Coffee" data-icon="🧊" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Cappuccino</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Cappuccino" data-icon="☁️" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Latte</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Latte" data-icon="🥛" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Latte Flavor</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Latte Flavor" data-icon="🥛" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Caramel Macchiato</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Caramel Macchiato" data-icon="🧡" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Latte Matcha</div></div><div class="ir"><span class="pm">100</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Latte Matcha" data-icon="🍵" data-price="100" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Spanish Latte</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Spanish Latte" data-icon="🇪🇸" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Pistachio Latte</div></div><div class="ir"><span class="pm">100</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Pistachio Latte" data-icon="🌰" data-price="100" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Mocha</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Mocha" data-icon="🍫" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice White Mocha</div></div><div class="ir"><span class="pm">100</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice White Mocha" data-icon="🤍" data-price="100" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Boba Ice Coffee</div></div><div class="ir"><span class="pm">120</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Boba Ice Coffee" data-icon="🧋" data-price="120" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Espresso Soda</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Espresso Soda" data-icon="🫧" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="milkshake">
+      <div class="sec-header"><h2 class="sec-title">Milk Shake</h2><p class="sec-en italic-serif">ميلك شيك</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Vanilla</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Vanilla" data-icon="🤍" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Chocolate</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Chocolate" data-icon="🍫" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Strawberry</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Strawberry" data-icon="🍓" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Mango</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Mango" data-icon="🥭" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Caramel</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Caramel" data-icon="🧡" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Blueberry</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Blueberry" data-icon="🫐" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Mix Berry</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Mix Berry" data-icon="🍓" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mix Passion Milk Shake</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mix Passion Milk Shake" data-icon="🌺" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Oreo</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Oreo" data-icon="🍪" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Mocha</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Mocha" data-icon="☕" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Nutella</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Nutella" data-icon="🤍" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Lutes</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Lutes" data-icon="🌰" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Snickers</div></div><div class="ir"><span class="pm">110</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Snickers" data-icon="🍫" data-price="110" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Pistachio</div></div><div class="ir"><span class="pm">100</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Pistachio" data-icon="🌰" data-price="100" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Milk Shake Kinder</div></div><div class="ir"><span class="pm">100</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Kinder" data-icon="🧸" data-price="100" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="badge">Signature</div><div class="in">Milk Shake Giusto</div></div><div class="ir"><span class="pm">120</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Milk Shake Giusto" data-icon="✨" data-price="120" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Boba Milk Shake</div></div><div class="ir"><span class="pm">110</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Boba Milk Shake" data-icon="🧋" data-price="110" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="frappe">
+      <div class="sec-header"><h2 class="sec-title">Frappe</h2><p class="sec-en italic-serif">فرابيه</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Vanilla Frappe</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Vanilla Frappe" data-icon="🤍" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Pistachio Frappe</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Pistachio Frappe" data-icon="🌰" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Lutes Frappe</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Lutes Frappe" data-icon="🌰" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Chocolate Frappe</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Chocolate Frappe" data-icon="🍫" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Coffee Frappe</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Coffee Frappe" data-icon="☕" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mocha Frappe</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mocha Frappe" data-icon="☕" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Caramel Frappe</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Caramel Frappe" data-icon="🧡" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Nutella Frappe</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Nutella Frappe" data-icon="🍫" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Matcha Frappe</div></div><div class="ir"><span class="pm">100</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Matcha Frappe" data-icon="🍵" data-price="100" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Boba Frappe</div></div><div class="ir"><span class="pm">120</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Boba Frappe" data-icon="🧋" data-price="120" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Frappuccino</div><div class="id">Chocolate · Caramel · Nutella</div></div><div class="ir"><span class="pm">100</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Frappuccino" data-icon="☕" data-price="100" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="juices">
+      <div class="sec-header"><h2 class="sec-title">Fresh Juices</h2><p class="sec-en italic-serif">عصائر طازجة</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mango</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mango" data-icon="🥭" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Strawberry</div></div><div class="ir"><span class="pm">75</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Strawberry" data-icon="🍓" data-price="75" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Guava</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Guava" data-icon="🍈" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Watermelon</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Watermelon" data-icon="🍉" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Avocado Nuts</div></div><div class="ir"><span class="pm">120</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Avocado Nuts" data-icon="🥑" data-price="120" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Pomegranate</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Pomegranate" data-icon="❤️" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Lemon Mint</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Lemon Mint" data-icon="🍋" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Lemon</div></div><div class="ir"><span class="pm">75</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Lemon" data-icon="🍋" data-price="75" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Kiwi</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Kiwi" data-icon="🥝" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Dates</div><div class="ie">تمر</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Dates" data-icon="🌴" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Orange</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Orange" data-icon="🍊" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Floureda</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Floureda" data-icon="🌸" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mango Kiwi</div></div><div class="ir"><span class="pm">100</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mango Kiwi" data-icon="🥭" data-price="100" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="badge">Special</div><div class="in">Power Cocktail</div></div><div class="ir"><span class="pm">120</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Power Cocktail" data-icon="🌈" data-price="120" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="smoothie">
+      <div class="sec-header"><h2 class="sec-title">Smoothie</h2><p class="sec-en italic-serif">سموذي</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mango</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mango" data-icon="🥭" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Strawberry</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Strawberry" data-icon="🍓" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Watermelon</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Watermelon" data-icon="🍉" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Watermelon Mint</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Watermelon Mint" data-icon="🍉" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Green Apple</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Green Apple" data-icon="🍏" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Blueberry</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Blueberry" data-icon="🫐" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mix Berry</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mix Berry" data-icon="🍓" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Passion Fruit</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Passion Fruit" data-icon="🌺" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Pina Colada</div></div><div class="ir"><span class="pm">100</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Pina Colada" data-icon="🍍" data-price="100" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mango Coconut</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mango Coconut" data-icon="🥭" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Boba Smoothie</div></div><div class="ir"><span class="pm">120</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Boba Smoothie" data-icon="🧋" data-price="120" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="waffle">
+      <div class="sec-header"><h2 class="sec-title">Waffle</h2><p class="sec-en italic-serif">وافل</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Waffle Nutella</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Waffle Nutella" data-icon="🍫" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Waffle Lutes</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Waffle Lutes" data-icon="🌰" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Waffle Pistachio</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Waffle Pistachio" data-icon="🌰" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Waffle Oreo</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Waffle Oreo" data-icon="🍪" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Waffle Caramel</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Waffle Caramel" data-icon="🧡" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Waffle Strawberry</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Waffle Strawberry" data-icon="🍓" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Waffle Four Season</div></div><div class="ir"><span class="pm">110</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Waffle Four Season" data-icon="🍂" data-price="110" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Waffle Cono</div></div><div class="ir"><span class="pm">120</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Waffle Cono" data-icon="🧇" data-price="120" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="icecream">
+      <div class="sec-header"><h2 class="sec-title">Ice Cream</h2><p class="sec-en italic-serif">آيس كريم</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Cream 2 Scoop</div></div><div class="ir"><span class="pm">45</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Cream 2 Scoop" data-icon="🍦" data-price="45" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Cream 3 Scoop</div></div><div class="ir"><span class="pm">60</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Cream 3 Scoop" data-icon="🍦" data-price="60" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Ice Cream 4 Scoop</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Ice Cream 4 Scoop" data-icon="🍦" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Madness Oreo</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Madness Oreo" data-icon="🍪" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Madness Cheese Flavor</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Madness Cheese Flavor" data-icon="🧀" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="dessert">
+      <div class="sec-header"><h2 class="sec-title">Dessert</h2><p class="sec-en italic-serif">حلويات</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Brownies</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Brownies" data-icon="🍫" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Molten Chocolate</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Molten Chocolate" data-icon="🍫" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Cheese Cake</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Cheese Cake" data-icon="🍰" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Cinnabon</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Cinnabon" data-icon="🌀" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Red Velvet</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Red Velvet" data-icon="❤️" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Chocolate Fudge</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Chocolate Fudge" data-icon="🍫" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Nutella Hazelnut</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Nutella Hazelnut" data-icon="🌰" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="breakfast">
+      <div class="sec-header"><h2 class="sec-title">Break Fast</h2><p class="sec-en italic-serif">إفطار</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Croissant Romi</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Croissant Romi" data-icon="🥐" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Croissant Chocolate</div></div><div class="ir"><span class="pm">60</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Croissant Chocolate" data-icon="🍫" data-price="60" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Sandwich Smoked Turkey</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Sandwich Smoked Turkey" data-icon="🥪" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Sandwich Cheddar</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Sandwich Cheddar" data-icon="🧀" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="softdrink">
+      <div class="sec-header"><h2 class="sec-title">Soft Drink</h2><p class="sec-en italic-serif">مشروبات غازية</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mineral Water</div></div><div class="ir"><span class="pm">13</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mineral Water" data-icon="💧" data-price="13" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Red Bull</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Red Bull" data-icon="🐂" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">V Cola</div></div><div class="ir"><span class="pm">40</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="V Cola" data-icon="🥤" data-price="40" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Pepsi</div></div><div class="ir"><span class="pm">35</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Pepsi" data-icon="🥤" data-price="35" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">7 UP</div></div><div class="ir"><span class="pm">35</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="7 UP" data-icon="🥤" data-price="35" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Twist</div></div><div class="ir"><span class="pm">35</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Twist" data-icon="🥤" data-price="35" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Miranda</div></div><div class="ir"><span class="pm">35</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Miranda" data-icon="🥤" data-price="35" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+    <div class="menu-category" id="colors">
+      <div class="sec-header"><h2 class="sec-title">Colors</h2><p class="sec-en italic-serif">موهيتو وكوكتيلات</p><div class="sec-rule"></div></div>
+      <div class="items-list">
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mojito Strawberry</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mojito Strawberry" data-icon="🍓" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mojito Blueberry</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mojito Blueberry" data-icon="🫐" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mojito Mixberry</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mojito Mixberry" data-icon="🍓" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mojito Passion Fruit</div></div><div class="ir"><span class="pm">90</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mojito Passion Fruit" data-icon="🌺" data-price="90" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mojito Kiwi</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mojito Kiwi" data-icon="🥝" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mojito Cocktail</div></div><div class="ir"><span class="pm">95</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mojito Cocktail" data-icon="🍹" data-price="95" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mojito Blue Sky</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mojito Blue Sky" data-icon="💙" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Mojito Boba</div></div><div class="ir"><span class="pm">120</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Mojito Boba" data-icon="🧋" data-price="120" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Sun Shine</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Sun Shine" data-icon="☀️" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Sun Rise</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Sun Rise" data-icon="🌅" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Blue Hawaii</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Blue Hawaii" data-icon="🌊" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Cherry Cola</div></div><div class="ir"><span class="pm">80</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Cherry Cola" data-icon="🍒" data-price="80" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="in">Berry Cola</div></div><div class="ir"><span class="pm">85</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Berry Cola" data-icon="🫐" data-price="85" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="badge">Special</div><div class="in">Redbull Flavor</div></div><div class="ir"><span class="pm">120</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Redbull Flavor" data-icon="🐂" data-price="120" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+        <div class="item"><div class="ip"><img src="giusto_logo.png" style="width:70%;height:70%;object-fit:contain;opacity:0.9;"></div><div class="iinfo"><div class="item-bottom"><div class="ib"><div class="badge">Special</div><div class="in">Redbull Cocktail</div></div><div class="ir"><span class="pm">140</span><span class="pc">جنيه</span></div></div><button class="add-cart-btn" data-name="Redbull Cocktail" data-icon="🐂" data-price="140" onclick="addToCart(this)">+ أضف للسلة</button></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<button id="view-toggle" onclick="toggleView()" title="تغيير شكل العرض">
+  <span id="vt-icon" style="font-size: 18px; margin-top:2px;">☰</span>
+  <span id="vt-label">List View</span>
+</button>
+
+<button id="cart-fab" class="hidden" onclick="openCart()">
+  <span>🛒 View Order</span>
+  <span id="cart-count">0</span>
+</button>
+
+<div id="size-modal" class="modal-overlay" onclick="closeSizeModal(event)">
+  <div class="modal-sheet">
+    <h3 id="size-modal-name">Choose Size</h3>
+    <p>Select your preferred cup size</p>
+    <div class="size-opts">
+      <div class="size-opt sel" id="size-opt-s" onclick="selectSize('s')">
+        <div class="sol" id="size-price-s">45</div>
+        <div class="sll">Single (S)</div>
+      </div>
+      <div class="size-opt" id="size-opt-d" onclick="selectSize('d')">
+        <div class="sol" id="size-price-d">55</div>
+        <div class="sll">Double (D)</div>
+      </div>
+    </div>
+    <button class="btn-solid" onclick="confirmSize()">Confirm Selection ✓</button>
+  </div>
+</div>
+
+<div id="cart-drawer" class="modal-overlay" onclick="closeCartDrawer(event)">
+  <div class="cart-sheet" id="cart-sheet-inner">
+    <div class="cart-head">
+      <h2 class="serif">Your Cart 🛒</h2>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items-list"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span class="cart-total-lbl">Total Amount</span>
+        <span class="cart-total-val"><span id="cart-total">0</span> جنيه</span>
+      </div>
+      <button class="cart-checkout" onclick="openNameModal()">Proceed to Checkout 🎯</button>
+    </div>
+  </div>
+</div>
+
+<div id="name-modal" class="modal-overlay" onclick="closeNameModal(event)">
+  <div class="modal-sheet">
+    <h3 class="serif">Complete Order</h3>
+    <p>Please enter your name to reserve this order</p>
+    <input class="name-input" id="customer-name" type="text" placeholder="Your Name..." maxlength="40" />
+    <button class="btn-solid name-confirm" onclick="confirmOrder()">Confirm & Order ✓</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<div id="pw-modal" class="modal-overlay" onclick="closePwModal(event)">
+  <div class="modal-sheet" style="background: rgba(42, 30, 23, 0.95); border: 1px solid rgba(201,137,58,0.3); color: #fff;">
+    <h3 class="serif" style="color: var(--accent-gold);">Admin Login</h3>
+    <p style="color: rgba(255,255,255,0.6);">Authorized personnel only</p>
+    <input class="pw-input" id="pw-input" type="password" placeholder="Password" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);" onkeydown="if(event.key==='Enter')checkPw()" />
+    <button class="btn-solid" onclick="checkPw()">Login</button>
+    <p id="pw-err" style="color: #ef9a9a; margin-top: 12px; font-size: 13px;"></p>
+  </div>
+</div>
+
+<div id="admin-overlay">
+  <div class="admin-head">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <h2 class="serif">Orders Dashboard</h2>
+      <span style="background: rgba(201,137,58,0.2); padding: 4px 12px; border-radius: 20px; font-size: 13px; color: var(--accent-gold);" id="admin-order-count">0</span>
+    </div>
+    <button class="admin-close" onclick="closeAdmin()">✕</button>
+  </div>
+  <div id="admin-toast" style="text-align:center; padding: 10px; color: #fff; background: var(--accent-gold); opacity:0; transition: 0.3s; margin-top:10px; border-radius: 20px; width: max-content; margin: 10px auto;"></div>
+  <div class="admin-body" id="admin-orders-list"></div>
+</div>
+
+<footer class="footer lp-section">
+  <div class="footer-logo serif">Giusto Cafe</div>
+  <div class="footer-tag italic-serif">Good coffee. Good moments.</div>
+  <p class="fn">Prices include tax · All Rights Reserved © Giusto Cafe</p>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCEwlDv00r6_eZeiY_gkn_NTCcD9xzDMbo",
+  authDomain: "giusto-23b6e.firebaseapp.com",
+  projectId: "giusto-23b6e",
+  storageBucket: "giusto-23b6e.firebasestorage.app",
+  messagingSenderId: "456492521831",
+  appId: "1:456492521831:web:48fd655a6b6ce7de3d37c2",
+  measurementId: "G-LCVJFP5Q6J"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// Menu Tab Logic
+const tabs = document.querySelectorAll('.tab-btn');
+const sections = document.querySelectorAll('.menu-category');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    sections.forEach(x => x.classList.remove('active'));
+    tab.classList.add('active');
+    const target = document.getElementById(tab.dataset.target);
+    if(target) target.classList.add('active');
+  });
+});
+
+let cart = [];
+let firestoreOrders = [];
+let pendingSizeItem = null;
+let selectedSize = 's';
+let logoTimer = null;
+let adminUnsubscribe = null;
+
+function startLogoPress() { logoTimer = setTimeout(() => { openPwModal(); }, 3000); }
+function cancelLogoPress() { clearTimeout(logoTimer); }
+
+function addToCart(btn) {
+  const name = btn.dataset.name;
+  const icon = btn.dataset.icon;
+  const hasSizes = btn.dataset.hasSizes === 'true';
+  if (hasSizes) {
+    pendingSizeItem = { name, icon, priceS: parseInt(btn.dataset.priceS), priceD: parseInt(btn.dataset.priceD), btn };
+    document.getElementById('size-modal-name').textContent = name;
+    document.getElementById('size-price-s').textContent = btn.dataset.priceS;
+    document.getElementById('size-price-d').textContent = btn.dataset.priceD;
+    selectSize('s');
+    document.getElementById('size-modal').classList.add('open');
+  } else {
+    pushToCart({ name, icon, price: parseInt(btn.dataset.price), size: null });
+    animateBtn(btn);
+  }
+}
+
+function selectSize(s) {
+  selectedSize = s;
+  document.getElementById('size-opt-s').classList.toggle('sel', s === 's');
+  document.getElementById('size-opt-d').classList.toggle('sel', s === 'd');
+}
+
+function confirmSize() {
+  if (!pendingSizeItem) return;
+  const price = selectedSize === 's' ? pendingSizeItem.priceS : pendingSizeItem.priceD;
+  const sizeLabel = selectedSize === 's' ? 'Single' : 'Double';
+  pushToCart({ name: pendingSizeItem.name, icon: pendingSizeItem.icon, price, size: sizeLabel });
+  animateBtn(pendingSizeItem.btn);
+  closeSizeModal();
+}
+
+function closeSizeModal(e) {
+  if (!e || e.target === document.getElementById('size-modal')) {
+    document.getElementById('size-modal').classList.remove('open');
+    pendingSizeItem = null;
+  }
+}
+
+function pushToCart(item) {
+  const existing = cart.find(c => c.name === item.name && c.size === item.size);
+  if (existing) { existing.qty++; }
+  else { cart.push({ ...item, qty: 1 }); }
+  updateCartFab();
+  showToast('✓ Added: ' + item.name);
+}
+
+function animateBtn(btn) {
+  btn.classList.add('in-cart');
+  btn.textContent = '✓ Added';
+  setTimeout(() => {
+    btn.classList.remove('in-cart');
+    btn.textContent = '+ أضف للسلة';
+  }, 1800);
+}
+
+function updateCartFab() {
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  const fab = document.getElementById('cart-fab');
+  fab.classList.toggle('hidden', total === 0);
+  document.getElementById('cart-count').textContent = total;
+}
+
+function openCart() {
+  renderCart();
+  document.getElementById('cart-drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cart-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeCartDrawer(e) {
+  if (e.target === document.getElementById('cart-drawer')) closeCart();
+}
+
+function renderCart() {
+  const list = document.getElementById('cart-items-list');
+  if (cart.length === 0) {
+    list.innerHTML = '<div style="text-align:center; padding: 40px; color: var(--text-muted);">Cart is empty 🛒</div>';
+    document.getElementById('cart-total').textContent = '0';
+    return;
+  }
+  let html = '', total = 0;
+  cart.forEach((item, idx) => {
+    total += item.price * item.qty;
+    html += `<div class="cart-item">
+      <div class="cart-item-icon">${item.icon}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        ${item.size ? `<div class="cart-item-size">${item.size}</div>` : ''}
+      </div>
+      <div class="cart-item-qty">
+        <button class="qty-btn" onclick="window._changeQty(${idx},-1)">−</button>
+        <span class="qty-num">${item.qty}</span>
+        <button class="qty-btn" onclick="window._changeQty(${idx},1)">+</button>
+      </div>
+      <div class="cart-item-price">${item.price * item.qty}</div>
+    </div>`;
+  });
+  list.innerHTML = html;
+  document.getElementById('cart-total').textContent = total;
+}
+
+function changeQty(idx, delta) {
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  updateCartFab();
+  renderCart();
+}
+window._changeQty = changeQty;
+
+function openNameModal() {
+  if (cart.length === 0) { showToast('Cart is empty!'); return; }
+  document.getElementById('name-modal').classList.add('open');
+}
+function closeNameModal(e) {
+  if (!e || e.target === document.getElementById('name-modal')) {
+    document.getElementById('name-modal').classList.remove('open');
+  }
+}
+
+async function confirmOrder() {
+  const name = document.getElementById('customer-name').value.trim();
+  if (!name) { showToast('Please enter your name!'); return; }
+  const btn = document.querySelector('.name-confirm');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  try {
+    await addDoc(collection(db, 'orders'), {
+      customer: name,
+      items: cart.map(i => ({ name: i.name, icon: i.icon, price: i.price, qty: i.qty, size: i.size || null })),
+      total: cart.reduce((s, i) => s + i.price * i.qty, 0),
+      status: 'confirmed',
+      createdAt: serverTimestamp()
+    });
+    cart = []; updateCartFab(); closeNameModal(); closeCart();
+    document.getElementById('customer-name').value = '';
+    showToast('🎉 Order confirmed for ' + name + '!');
+  } catch (err) {
+    showToast('❌ Error, please try again');
+  } finally {
+    btn.textContent = 'Confirm & Order ✓'; btn.disabled = false;
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function openPwModal() { document.getElementById('pw-modal').classList.add('open'); }
+function closePwModal(e) { if (!e || e.target === document.getElementById('pw-modal')) document.getElementById('pw-modal').classList.remove('open'); }
+function checkPw() {
+  if (document.getElementById('pw-input').value === 'albtat@#10') {
+    closePwModal(); openAdmin();
+  } else {
+    document.getElementById('pw-err').textContent = 'Incorrect password';
+  }
+}
+
+let lastKnownCount = -1;
+function openAdmin() { document.getElementById('admin-overlay').classList.add('open'); startAdminListener(); }
+function closeAdmin() { document.getElementById('admin-overlay').classList.remove('open'); }
+
+function startAdminListener() {
+  if (adminUnsubscribe) return;
+  adminUnsubscribe = onSnapshot(query(collection(db, 'orders'), orderBy('createdAt', 'desc')), (snapshot) => {
+    firestoreOrders = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (lastKnownCount !== -1 && firestoreOrders.length > lastKnownCount) {
+       const t = document.getElementById('admin-toast'); t.textContent = '🔔 New Order!'; t.style.opacity = '1';
+       setTimeout(() => t.style.opacity = '0', 3000);
+    }
+    lastKnownCount = firestoreOrders.length;
+    renderAdminOrders();
+  });
+}
+
+async function deleteOrder(orderId) {
+  if (!confirm('Delete this order?')) return;
+  const { deleteDoc, doc: fsDoc } = await import("https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js");
+  await deleteDoc(fsDoc(db, 'orders', orderId));
+}
+
+function renderAdminOrders() {
+  const list = document.getElementById('admin-orders-list');
+  if (firestoreOrders.length === 0) { list.innerHTML = '<div style="text-align:center; opacity:0.5; margin-top:40px;">No orders yet</div>'; return; }
+  let html = '';
+  firestoreOrders.forEach((order, idx) => {
+    let itemsHtml = order.items.map(item => `<div class="order-row"><span>${item.icon||''} ${item.name} ${item.size ? '('+item.size+')' : ''} × ${item.qty}</span><span>${item.price * item.qty} EGP</span></div>`).join('');
+    html += `<div class="order-card">
+      <div class="order-card-head">
+        <span class="order-num">#${firestoreOrders.length - idx} · ${order.customer}</span>
+        <button onclick="deleteOrder('${order.id}')" style="background:rgba(255,0,0,0.2); border:none; color:#ff8a80; padding:6px 12px; border-radius:12px; cursor:pointer;">Delete</button>
+      </div>
+      <div>${itemsHtml}</div>
+      <div class="order-total-row"><span>Total</span><span>${order.total} EGP</span></div>
+    </div>`;
+  });
+  list.innerHTML = html;
+  document.getElementById('admin-order-count').textContent = firestoreOrders.length;
+}
+
+function toggleView() {
+  const isList = document.body.classList.toggle('list-view');
+  document.getElementById('vt-icon').textContent = isList ? '⊞' : '☰';
+  document.getElementById('vt-label').textContent = isList ? 'Grid View' : 'List View';
+  localStorage.setItem('giusto_view', isList ? 'list' : 'grid');
+}
+if (localStorage.getItem('giusto_view') === 'list') toggleView();
+
+window.toggleView = toggleView; window.startLogoPress = startLogoPress; window.cancelLogoPress = cancelLogoPress;
+window.addToCart = addToCart; window.selectSize = selectSize; window.confirmSize = confirmSize; window.closeSizeModal = closeSizeModal;
+window.openCart = openCart; window.closeCart = closeCart; window.closeCartDrawer = closeCartDrawer; window.openNameModal = openNameModal;
+window.closeNameModal = closeNameModal; window.confirmOrder = confirmOrder; window.openPwModal = openPwModal; window.closePwModal = closePwModal;
+window.checkPw = checkPw; window.closeAdmin = closeAdmin; window.deleteOrder = deleteOrder;
+</script>
+
+</body>
+</html>
